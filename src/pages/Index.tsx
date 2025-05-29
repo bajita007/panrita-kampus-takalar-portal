@@ -1,17 +1,11 @@
 
-import { useState } from 'react';
+import Navigation from '@/components/Navigation';
 import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, Users, BookOpen, Award, Calendar, MapPin, Phone, Mail } from 'lucide-react';
+import { GraduationCap, Users, BookOpen, Award, Calendar, MapPin, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Index = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   const programs = [
     {
       title: "Teknologi Pertanian",
@@ -51,76 +45,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-lg fixed w-full top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <GraduationCap className="h-8 w-8 text-green-600 mr-2" />
-                <span className="font-bold text-xl text-gray-900">ITPT</span>
-              </div>
-            </div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="text-gray-900 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Beranda
-              </Link>
-              <Link to="/about" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Tentang
-              </Link>
-              <Link to="/programs" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Program Studi
-              </Link>
-              <Link to="/admissions" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Penerimaan
-              </Link>
-              <Link to="/news" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Berita
-              </Link>
-              <Link to="/contact" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Kontak
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <button
-                onClick={toggleMenu}
-                className="text-gray-700 hover:text-green-600 focus:outline-none focus:text-green-600"
-              >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link to="/" className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-green-600">
-                Beranda
-              </Link>
-              <Link to="/about" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600">
-                Tentang
-              </Link>
-              <Link to="/programs" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600">
-                Program Studi
-              </Link>
-              <Link to="/admissions" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600">
-                Penerimaan
-              </Link>
-              <Link to="/news" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600">
-                Berita
-              </Link>
-              <Link to="/contact" className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-green-600">
-                Kontak
-              </Link>
-            </div>
-          </div>
-        )}
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
       <section className="pt-16 bg-gradient-to-br from-green-50 to-blue-50">

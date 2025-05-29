@@ -1,49 +1,17 @@
-
-import { Link } from 'react-router-dom';
+import Navigation from '@/components/Navigation';
 import { GraduationCap, Target, Eye, Award, Users, BookOpen, Microscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center">
-                <GraduationCap className="h-8 w-8 text-green-600 mr-2" />
-                <span className="font-bold text-xl text-gray-900">ITPT</span>
-              </Link>
-            </div>
-            
-            <div className="flex items-center space-x-8">
-              <Link to="/" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Beranda
-              </Link>
-              <Link to="/about" className="text-green-600 px-3 py-2 text-sm font-medium">
-                Tentang
-              </Link>
-              <Link to="/programs" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Program Studi
-              </Link>
-              <Link to="/admissions" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Penerimaan
-              </Link>
-              <Link to="/news" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Berita
-              </Link>
-              <Link to="/contact" className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
-                Kontak
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-50 to-blue-50 py-20">
+      <section className="pt-16 bg-gradient-to-br from-green-50 to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
