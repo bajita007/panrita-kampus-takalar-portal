@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { GraduationCap, Clock, Users, Award, BookOpen, Microscope, TrendingUp } from 'lucide-react';
+import { GraduationCap, Clock, Users, Award, BookOpen, Microscope, TrendingUp, Droplets } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,36 +8,12 @@ import { Badge } from '@/components/ui/badge';
 const Programs = () => {
   const programs = [
     {
-      title: "Teknologi Pertanian",
-      degree: "S1 (Sarjana)",
-      duration: "4 Tahun (8 Semester)",
-      capacity: "60 Mahasiswa/Tahun",
-      accreditation: "A",
-      description: "Program studi yang memadukan teknologi modern dengan praktik pertanian berkelanjutan. Mahasiswa akan mempelajari inovasi teknologi untuk meningkatkan produktivitas dan efisiensi pertanian.",
-      subjects: [
-        "Mekanisasi Pertanian",
-        "Teknologi Pascapanen",
-        "Sistem Informasi Pertanian",
-        "Teknik Irigasi dan Drainase",
-        "Teknologi Greenhouse",
-        "Precision Agriculture"
-      ],
-      careers: [
-        "Ahli Teknologi Pertanian",
-        "Konsultan Agritech",
-        "Peneliti Pertanian",
-        "Supervisor Perkebunan",
-        "Entrepreneur Agribisnis"
-      ],
-      icon: <Microscope className="h-8 w-8 text-green-600" />
-    },
-    {
       title: "Agribisnis",
       degree: "S1 (Sarjana)",
       duration: "4 Tahun (8 Semester)",
-      capacity: "50 Mahasiswa/Tahun",
-      accreditation: "A",
-      description: "Fokus pada manajemen bisnis di sektor pertanian dan pengembangan wirausaha agribisnis. Program ini mempersiapkan lulusan yang mampu mengelola bisnis pertanian secara profesional.",
+      capacity: "60 Mahasiswa/Tahun",
+      accreditation: "Baik",
+      description: "Program studi yang fokus pada manajemen bisnis di sektor pertanian dan pengembangan wirausaha agribisnis. Program ini mempersiapkan lulusan yang mampu mengelola bisnis pertanian secara profesional.",
       subjects: [
         "Manajemen Agribisnis",
         "Pemasaran Produk Pertanian",
@@ -53,31 +29,83 @@ const Programs = () => {
         "Konsultan Bisnis Pertanian",
         "Peneliti Ekonomi Pertanian"
       ],
-      icon: <TrendingUp className="h-8 w-8 text-green-600" />
+      icon: <TrendingUp className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=500"
     },
     {
-      title: "Teknologi Pangan",
+      title: "Manajemen Sumber Daya Perairan",
+      degree: "S1 (Sarjana)",
+      duration: "4 Tahun (8 Semester)",
+      capacity: "50 Mahasiswa/Tahun",
+      accreditation: "Baik",
+      description: "Program studi yang mengkaji pengelolaan sumber daya perairan secara berkelanjutan. Mahasiswa akan mempelajari teknologi dan manajemen untuk konservasi dan pemanfaatan sumber daya air.",
+      subjects: [
+        "Ekologi Perairan",
+        "Manajemen Kualitas Air",
+        "Budidaya Perairan",
+        "Teknologi Pengolahan Air",
+        "Konservasi Sumber Daya Air",
+        "Sistem Informasi Geografis"
+      ],
+      careers: [
+        "Manajer Sumber Daya Air",
+        "Ahli Konservasi Perairan",
+        "Konsultan Lingkungan",
+        "Peneliti Perairan",
+        "Supervisor Budidaya Perairan"
+      ],
+      icon: <Droplets className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=500"
+    },
+    {
+      title: "Bisnis Digital",
       degree: "S1 (Sarjana)",
       duration: "4 Tahun (8 Semester)",
       capacity: "40 Mahasiswa/Tahun",
-      accreditation: "B",
-      description: "Pengembangan inovasi teknologi pengolahan dan keamanan pangan berkelanjutan. Program ini mengintegrasikan ilmu pangan dengan teknologi modern untuk menghasilkan produk pangan yang aman dan berkualitas.",
+      accreditation: "Baik",
+      description: "Program studi yang memadukan teknologi digital dengan strategi bisnis modern. Fokus pada pengembangan bisnis berbasis teknologi dan transformasi digital.",
       subjects: [
-        "Mikrobiologi Pangan",
-        "Teknologi Pengolahan Pangan",
-        "Keamanan dan Mutu Pangan",
-        "Kimia Pangan",
-        "Gizi dan Kesehatan",
-        "Inovasi Produk Pangan"
+        "E-Commerce",
+        "Digital Marketing",
+        "Analisis Data Bisnis",
+        "Teknologi Financial",
+        "Manajemen Inovasi",
+        "Startup Development"
       ],
       careers: [
-        "Food Technologist",
-        "Quality Control Specialist",
-        "Product Development Manager",
-        "Food Safety Inspector",
-        "Nutritionist"
+        "Digital Business Manager",
+        "E-Commerce Specialist",
+        "Digital Marketing Manager",
+        "Business Analyst",
+        "Tech Entrepreneur"
       ],
-      icon: <BookOpen className="h-8 w-8 text-green-600" />
+      icon: <Microscope className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500"
+    },
+    {
+      title: "Nutrisi dan Teknologi Pakan Ternak",
+      degree: "S1 (Sarjana)",
+      duration: "4 Tahun (8 Semester)",
+      capacity: "35 Mahasiswa/Tahun",
+      accreditation: "Baik",
+      description: "Program studi yang fokus pada pengembangan nutrisi dan teknologi pakan untuk ternak. Mengintegrasikan ilmu nutrisi dengan teknologi pakan untuk meningkatkan produktivitas ternak.",
+      subjects: [
+        "Ilmu Nutrisi Ternak",
+        "Teknologi Pakan",
+        "Biokimia Nutrisi",
+        "Formulasi Pakan",
+        "Fisiologi Ternak",
+        "Manajemen Pakan"
+      ],
+      careers: [
+        "Ahli Nutrisi Ternak",
+        "Quality Control Pakan",
+        "Konsultan Peternakan",
+        "Peneliti Nutrisi",
+        "Manajer Produksi Pakan"
+      ],
+      icon: <BookOpen className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500"
     }
   ];
 
@@ -90,7 +118,7 @@ const Programs = () => {
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <GraduationCap className="h-8 w-8 text-green-600 mr-2" />
-                <span className="font-bold text-xl text-gray-900">ITPT</span>
+                <span className="font-bold text-xl text-gray-900">ITP Takalar</span>
               </Link>
             </div>
             
@@ -121,10 +149,10 @@ const Programs = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-50 to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="text-center pt-8 pb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Program Studi
-              <span className="block text-green-600">Unggulan ITPT</span>
+              <span className="block text-green-600">Unggulan ITP</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Pilihan program studi berkualitas tinggi yang dirancang untuk menghadapi 
@@ -149,11 +177,18 @@ const Programs = () => {
                           <CardTitle className="text-2xl mb-2">{program.title}</CardTitle>
                           <div className="flex flex-wrap gap-2">
                             <Badge variant="secondary">{program.degree}</Badge>
-                            <Badge variant="outline" className={program.accreditation === 'A' ? 'border-green-600 text-green-600' : 'border-blue-600 text-blue-600'}>
+                            <Badge variant="outline" className="border-green-600 text-green-600">
                               Akreditasi {program.accreditation}
                             </Badge>
                           </div>
                         </div>
+                      </div>
+                      <div className="aspect-video overflow-hidden rounded-lg mb-4">
+                        <img 
+                          src={program.image} 
+                          alt={program.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </CardHeader>
                     
@@ -221,8 +256,8 @@ const Programs = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Keunggulan Program Studi ITPT</h2>
-            <p className="text-lg text-gray-600">Mengapa memilih ITPT untuk masa depan Anda?</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Keunggulan Program Studi ITP</h2>
+            <p className="text-lg text-gray-600">Mengapa memilih ITP untuk masa depan Anda?</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -268,23 +303,25 @@ const Programs = () => {
       {/* CTA Section */}
       <section className="py-20 bg-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Siap Memulai Perjalanan Akademik Anda?
-          </h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            Bergabunglah dengan ITPT dan wujudkan impian Anda di bidang teknologi pertanian
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/admissions">
-              <Button size="lg" variant="secondary" className="px-8 py-3">
-                Daftar Sekarang
-              </Button>
-            </Link>
-            <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
-                Konsultasi Program
-              </Button>
-            </Link>
+          <div className="pt-8 pb-8">
+            <h2 className="text-3xl font-bold mb-6">
+              Siap Memulai Perjalanan Akademik Anda?
+            </h2>
+            <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
+              Bergabunglah dengan ITP dan wujudkan impian Anda di bidang teknologi pertanian
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/admissions">
+                <Button size="lg" variant="secondary" className="px-8 py-3">
+                  Daftar Sekarang
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
+                  Konsultasi Program
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -295,13 +332,13 @@ const Programs = () => {
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
               <GraduationCap className="h-8 w-8 text-green-400 mr-2" />
-              <span className="font-bold text-xl">ITPT</span>
+              <span className="font-bold text-xl">ITP</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Institut Teknologi Pertanian Takalar - Yayasan Panrita Takalar
+              Institut Teknologi Pertanian - Yayasan Panrita Takalar
             </p>
             <p className="text-gray-400 text-sm">
-              &copy; 2024 Institut Teknologi Pertanian Takalar. All rights reserved.
+              &copy; 2024 Institut Teknologi Pertanian. All rights reserved.
             </p>
           </div>
         </div>

@@ -2,10 +2,12 @@
 import Navigation from '@/components/Navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { X } from 'lucide-react';
+import { useState } from 'react';
 
 const Gallery = () => {
-  const { toast } = useToast();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const galleryImages = [
     {
@@ -13,8 +15,8 @@ const Gallery = () => {
       images: [
         {
           src: "https://images.unsplash.com/photo-1562774053-701939374585?w=500",
-          title: "Gedung Utama ITPT",
-          description: "Gedung utama Institut Teknologi Pertanian Takalar"
+          title: "Gedung Utama ITP",
+          description: "Gedung utama Institut Teknologi Pertanian"
         },
         {
           src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500", 
@@ -23,7 +25,7 @@ const Gallery = () => {
         },
         {
           src: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?w=500",
-          title: "Perpustakaan ITPT",
+          title: "Perpustakaan ITP",
           description: "Perpustakaan dengan koleksi buku dan jurnal lengkap"
         }
       ]
@@ -70,22 +72,15 @@ const Gallery = () => {
     }
   ];
 
-  const handleImageClick = (title: string) => {
-    toast({
-      title: "Lihat Detail",
-      description: `Detail foto "${title}" akan segera tersedia.`,
-    });
-  };
-
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       
       <div className="pt-20 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 pt-8 pb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Galeri</h1>
-            <p className="text-lg text-gray-600">Dokumentasi Kegiatan Institut Teknologi Pertanian Takalar</p>
+            <p className="text-lg text-gray-600">Dokumentasi Kegiatan Institut Teknologi Pertanian</p>
           </div>
 
           {galleryImages.map((category, categoryIndex) => (
@@ -94,24 +89,33 @@ const Gallery = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.images.map((image, imageIndex) => (
                   <Card key={imageIndex} className="hover:shadow-lg transition-shadow overflow-hidden">
-                    <div className="aspect-video overflow-hidden">
-                      <img 
-                        src={image.src} 
-                        alt={image.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="aspect-video overflow-hidden cursor-pointer">
+                          <img 
+                            src={image.src} 
+                            alt={image.title}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl w-full p-0">
+                        <div className="relative">
+                          <img 
+                            src={image.src.replace('w=500', 'w=1200')} 
+                            alt={image.title}
+                            className="w-full h-auto"
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white p-4">
+                            <h3 className="font-semibold text-lg mb-2">{image.title}</h3>
+                            <p className="text-sm">{image.description}</p>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-gray-900 mb-2">{image.title}</h3>
-                      <p className="text-sm text-gray-600 mb-3">{image.description}</p>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="w-full border-green-600 text-green-600 hover:bg-green-50"
-                        onClick={() => handleImageClick(image.title)}
-                      >
-                        Lihat Detail
-                      </Button>
+                      <p className="text-sm text-gray-600">{image.description}</p>
                     </CardContent>
                   </Card>
                 ))}

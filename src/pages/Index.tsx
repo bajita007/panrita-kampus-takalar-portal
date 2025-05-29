@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { GraduationCap, Users, BookOpen, Award, Calendar, MapPin, Phone, Mail, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -11,22 +12,32 @@ const Index = () => {
 
   const programs = [
     {
-      title: "Teknologi Pertanian",
-      description: "Program studi unggulan yang memadukan teknologi modern dengan praktik pertanian berkelanjutan",
-      icon: <GraduationCap className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400"
-    },
-    {
-      title: "Agribisnis", 
-      description: "Fokus pada manajemen bisnis di sektor pertanian dan pengembangan wirausaha agribisnis",
+      title: "Agribisnis",
+      description: "Program studi yang fokus pada manajemen bisnis di sektor pertanian dan pengembangan wirausaha agribisnis",
       icon: <Users className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400"
+      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400",
+      accreditation: "Akreditasi Baik"
     },
     {
-      title: "Teknologi Pangan",
-      description: "Pengembangan inovasi teknologi pengolahan dan keamanan pangan berkelanjutan",
+      title: "Manajemen Sumber Daya Perairan", 
+      description: "Program studi yang mengkaji pengelolaan sumber daya perairan secara berkelanjutan",
       icon: <BookOpen className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400"
+      image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=400",
+      accreditation: "Akreditasi Baik"
+    },
+    {
+      title: "Bisnis Digital",
+      description: "Program studi yang memadukan teknologi digital dengan strategi bisnis modern",
+      icon: <Award className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400",
+      accreditation: "Akreditasi Baik"
+    },
+    {
+      title: "Nutrisi dan Teknologi Pakan Ternak",
+      description: "Program studi yang fokus pada pengembangan nutrisi dan teknologi pakan untuk ternak",
+      icon: <GraduationCap className="h-8 w-8 text-green-600" />,
+      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400",
+      accreditation: "Akreditasi Baik"
     }
   ];
 
@@ -40,13 +51,13 @@ const Index = () => {
     {
       title: "Kerja Sama dengan Kementerian Pertanian",
       date: "10 Januari 2024", 
-      description: "ITPT menandatangani MoU dengan Kementerian Pertanian untuk pengembangan teknologi pertanian berkelanjutan.",
+      description: "ITP menandatangani MoU dengan Kementerian Pertanian untuk pengembangan teknologi pertanian berkelanjutan.",
       image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400"
     },
     {
-      title: "Penelitian Unggul Dosen ITPT",
+      title: "Penelitian Unggul Dosen ITP",
       date: "5 Januari 2024",
-      description: "Tim peneliti ITPT berhasil mengembangkan varietas padi unggul yang tahan terhadap perubahan iklim.",
+      description: "Tim peneliti ITP berhasil mengembangkan varietas padi unggul yang tahan terhadap perubahan iklim.",
       image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400"
     }
   ];
@@ -74,10 +85,10 @@ const Index = () => {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="pt-8 pb-8">
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                 Institut Teknologi
-                <span className="block text-green-600">Pertanian Takalar</span>
+                <span className="block text-green-600">Pertanian</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8">
                 Bagian dari Yayasan Panrita Takalar - Mengembangkan teknologi pertanian berkelanjutan 
@@ -102,7 +113,7 @@ const Index = () => {
             <div className="relative">
               <img 
                 src="https://images.unsplash.com/photo-1562774053-701939374585?w=600" 
-                alt="Campus ITPT"
+                alt="Campus ITP"
                 className="rounded-lg shadow-xl w-full"
               />
             </div>
@@ -120,7 +131,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {programs.map((program, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow duration-300 overflow-hidden">
                 <div className="aspect-video overflow-hidden">
@@ -134,20 +145,15 @@ const Index = () => {
                   <div className="mx-auto mb-4">
                     {program.icon}
                   </div>
-                  <CardTitle className="text-xl">{program.title}</CardTitle>
+                  <CardTitle className="text-lg">{program.title}</CardTitle>
+                  <Badge variant="outline" className="border-green-600 text-green-600 mx-auto">
+                    {program.accreditation}
+                  </Badge>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-center text-gray-600 mb-4">
+                  <CardDescription className="text-center text-gray-600">
                     {program.description}
                   </CardDescription>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full border-green-600 text-green-600 hover:bg-green-50"
-                    onClick={() => handleButtonClick(`Program ${program.title}`)}
-                  >
-                    Pelajari Program
-                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -301,10 +307,10 @@ const Index = () => {
             <div>
               <div className="flex items-center mb-4">
                 <GraduationCap className="h-8 w-8 text-green-400 mr-2" />
-                <span className="font-bold text-xl">ITPT</span>
+                <span className="font-bold text-xl">ITP</span>
               </div>
               <p className="text-gray-300 mb-4">
-                Institut Teknologi Pertanian Takalar - Yayasan Panrita Takalar
+                Institut Teknologi Pertanian - Yayasan Panrita Takalar
               </p>
               <p className="text-gray-400 text-sm">
                 Mengembangkan teknologi pertanian untuk masa depan yang berkelanjutan
@@ -314,16 +320,17 @@ const Index = () => {
             <div>
               <h3 className="font-semibold mb-4">Program Studi</h3>
               <ul className="space-y-2 text-gray-300">
-                <li><Link to="/programs" className="hover:text-green-400 transition-colors">Teknologi Pertanian</Link></li>
                 <li><Link to="/programs" className="hover:text-green-400 transition-colors">Agribisnis</Link></li>
-                <li><Link to="/programs" className="hover:text-green-400 transition-colors">Teknologi Pangan</Link></li>
+                <li><Link to="/programs" className="hover:text-green-400 transition-colors">Manajemen Sumber Daya Perairan</Link></li>
+                <li><Link to="/programs" className="hover:text-green-400 transition-colors">Bisnis Digital</Link></li>
+                <li><Link to="/programs" className="hover:text-green-400 transition-colors">Nutrisi dan Teknologi Pakan Ternak</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-semibold mb-4">Informasi</h3>
               <ul className="space-y-2 text-gray-300">
-                <li><Link to="/about" className="hover:text-green-400 transition-colors">Tentang ITPT</Link></li>
+                <li><Link to="/about" className="hover:text-green-400 transition-colors">Tentang ITP</Link></li>
                 <li><Link to="/admissions" className="hover:text-green-400 transition-colors">Penerimaan</Link></li>
                 <li><Link to="/news" className="hover:text-green-400 transition-colors">Berita</Link></li>
                 <li><Link to="/contact" className="hover:text-green-400 transition-colors">Kontak</Link></li>
@@ -350,7 +357,7 @@ const Index = () => {
           </div>
           
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Institut Teknologi Pertanian Takalar - Yayasan Panrita Takalar. All rights reserved.</p>
+            <p>&copy; 2024 Institut Teknologi Pertanian - Yayasan Panrita Takalar. All rights reserved.</p>
           </div>
         </div>
       </footer>
