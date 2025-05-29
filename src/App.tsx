@@ -10,6 +10,21 @@ import Programs from "./pages/Programs";
 import Admissions from "./pages/Admissions";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
+import VisiMisi from "./pages/VisiMisi";
+import StrukturOrganisasi from "./pages/StrukturOrganisasi";
+import ProfilDosen from "./pages/ProfilDosen";
+import Kurikulum from "./pages/Kurikulum";
+import PeraturanAkademik from "./pages/PeraturanAkademik";
+import KalenderAkademik from "./pages/KalenderAkademik";
+import SIA from "./pages/SIA";
+import JadwalSeminar from "./pages/JadwalSeminar";
+import Laboratorium from "./pages/Laboratorium";
+import KegiatanMahasiswa from "./pages/KegiatanMahasiswa";
+import Beasiswa from "./pages/Beasiswa";
+import InfoKarir from "./pages/InfoKarir";
+import BeritaAkademik from "./pages/BeritaAkademik";
+import Pengumuman from "./pages/Pengumuman";
+import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,9 +38,24 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
+          <Route path="/visi-misi" element={<VisiMisi />} />
+          <Route path="/struktur-organisasi" element={<StrukturOrganisasi />} />
+          <Route path="/profil-dosen" element={<ProfilDosen />} />
           <Route path="/programs" element={<Programs />} />
+          <Route path="/kurikulum" element={<Kurikulum />} />
+          <Route path="/peraturan-akademik" element={<PeraturanAkademik />} />
+          <Route path="/kalender-akademik" element={<KalenderAkademik />} />
+          <Route path="/sia" element={<SIA />} />
+          <Route path="/jadwal-seminar" element={<JadwalSeminar />} />
+          <Route path="/laboratorium" element={<Laboratorium />} />
           <Route path="/admissions" element={<Admissions />} />
+          <Route path="/kegiatan-mahasiswa" element={<KegiatanMahasiswa />} />
+          <Route path="/beasiswa" element={<Beasiswa />} />
+          <Route path="/info-karir" element={<InfoKarir />} />
           <Route path="/news" element={<News />} />
+          <Route path="/berita-akademik" element={<BeritaAkademik />} />
+          <Route path="/pengumuman" element={<Pengumuman />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
