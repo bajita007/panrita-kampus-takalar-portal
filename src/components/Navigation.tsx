@@ -96,7 +96,7 @@ const Navigation = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <GraduationCap className="h-8 w-8 text-green-600 mr-2" />
-              <span className="font-bold text-xl text-gray-900">ITPT</span>
+              <span className="font-bold text-xl text-gray-900">ITP Takalar</span>
             </div>
           </div>
           
@@ -107,7 +107,7 @@ const Navigation = () => {
                 {item.hasDropdown ? (
                   <div className="relative">
                     <button 
-                      className="text-gray-700 hover:text-green-600 px-2 py-2 text-xs font-medium transition-colors flex items-center"
+                      className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center"
                       onMouseEnter={() => setActiveDropdown(item.title)}
                     >
                       {item.title}
@@ -135,7 +135,7 @@ const Navigation = () => {
                 ) : (
                   <Link 
                     to={item.path || '/'}
-                    className="text-gray-700 hover:text-green-600 px-2 py-2 text-xs font-medium transition-colors"
+                    className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors"
                   >
                     {item.title}
                   </Link>
