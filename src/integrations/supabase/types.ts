@@ -14,90 +14,273 @@ export type Database = {
   }
   public: {
     Tables: {
-      push_subscriptions: {
+      announcements: {
         Row: {
-          auth: string
+          category: string | null
+          content: string
           created_at: string | null
-          endpoint: string
-          id: number
-          p256dh: string
+          icon: string | null
+          id: string
+          is_published: boolean | null
+          priority: string | null
+          title: string
+          updated_at: string | null
         }
         Insert: {
-          auth: string
+          category?: string | null
+          content: string
           created_at?: string | null
-          endpoint: string
-          id?: number
-          p256dh: string
+          icon?: string | null
+          id?: string
+          is_published?: boolean | null
+          priority?: string | null
+          title: string
+          updated_at?: string | null
         }
         Update: {
-          auth?: string
+          category?: string | null
+          content?: string
           created_at?: string | null
-          endpoint?: string
-          id?: number
-          p256dh?: string
+          icon?: string | null
+          id?: string
+          is_published?: boolean | null
+          priority?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
-      questionnaire_responses: {
+      gallery: {
         Row: {
-          age: number
-          concerns: string | null
-          current_symptoms: Json | null
-          emergency_contact: string | null
-          exercise_level: string | null
-          gestational_week: number
-          id: number
-          medical_history: string | null
-          name: string
-          nutrition_concerns: string | null
-          phone: string
-          pregnancy_number: string
-          prenatal_care: string | null
-          previous_pregnancies: string | null
-          sleep_quality: string | null
-          stress_level: string | null
-          submitted_at: string | null
-          support_system: string | null
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string
+          is_active: boolean | null
+          title: string
         }
         Insert: {
-          age: number
-          concerns?: string | null
-          current_symptoms?: Json | null
-          emergency_contact?: string | null
-          exercise_level?: string | null
-          gestational_week: number
-          id?: number
-          medical_history?: string | null
-          name: string
-          nutrition_concerns?: string | null
-          phone: string
-          pregnancy_number: string
-          prenatal_care?: string | null
-          previous_pregnancies?: string | null
-          sleep_quality?: string | null
-          stress_level?: string | null
-          submitted_at?: string | null
-          support_system?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url: string
+          is_active?: boolean | null
+          title: string
         }
         Update: {
-          age?: number
-          concerns?: string | null
-          current_symptoms?: Json | null
-          emergency_contact?: string | null
-          exercise_level?: string | null
-          gestational_week?: number
-          id?: number
-          medical_history?: string | null
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string
+          is_active?: boolean | null
+          title?: string
+        }
+        Relationships: []
+      }
+      laboratories: {
+        Row: {
+          capacity: number | null
+          created_at: string | null
+          description: string
+          facilities: string[] | null
+          id: string
+          is_available: boolean | null
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          capacity?: number | null
+          created_at?: string | null
+          description: string
+          facilities?: string[] | null
+          id?: string
+          is_available?: boolean | null
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          capacity?: number | null
+          created_at?: string | null
+          description?: string
+          facilities?: string[] | null
+          id?: string
+          is_available?: boolean | null
           name?: string
-          nutrition_concerns?: string | null
-          phone?: string
-          pregnancy_number?: string
-          prenatal_care?: string | null
-          previous_pregnancies?: string | null
-          sleep_quality?: string | null
-          stress_level?: string | null
-          submitted_at?: string | null
-          support_system?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      lecturers: {
+        Row: {
+          created_at: string | null
+          education: string
+          email: string | null
+          experience: string | null
+          field: string
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          education: string
+          email?: string | null
+          experience?: string | null
+          field: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          education?: string
+          email?: string | null
+          experience?: string | null
+          field?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string | null
+          excerpt: string | null
+          id: string
+          image_url: string | null
+          is_published: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          role: Database["public"]["Enums"]["user_role"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      programs: {
+        Row: {
+          accreditation: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          accreditation?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          accreditation?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      student_activities: {
+        Row: {
+          category: string
+          created_at: string | null
+          icon: string | null
+          id: string
+          is_active: boolean | null
+          items: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          items?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          items?: string[] | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -106,10 +289,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_user_role: {
+        Args: { user_id: string }
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      user_role: "admin" | "super_admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -236,6 +426,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["admin", "super_admin", "user"],
+    },
   },
 } as const
