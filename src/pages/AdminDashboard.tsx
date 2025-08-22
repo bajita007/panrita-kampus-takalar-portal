@@ -11,7 +11,10 @@ import { AdminNews } from '@/components/admin/AdminNews';
 import { AdminGallery } from '@/components/admin/AdminGallery';
 import { AdminAnnouncements } from '@/components/admin/AdminAnnouncements';
 import { AdminUsers } from '@/components/admin/AdminUsers';
-import { Users, BookOpen, Image, Bell, Newspaper, LogOut } from 'lucide-react';
+import { AdminSettings } from '@/components/admin/AdminSettings';
+import { AdminDownloads } from '@/components/admin/AdminDownloads';
+import { AdminCalendar } from '@/components/admin/AdminCalendar';
+import { Users, BookOpen, Image, Bell, Newspaper, LogOut, Settings, Download, Calendar } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -23,6 +26,8 @@ const AdminDashboard = () => {
     gallery: 0,
     announcements: 0,
     users: 0,
+    downloads: 0,
+    calendar: 0,
   });
 
   useEffect(() => {
@@ -46,12 +51,14 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const [programsRes, newsRes, galleryRes, announcementsRes, usersRes] = await Promise.all([
+      const [programsRes, newsRes, galleryRes, announcementsRes, usersRes, downloadsRes, calendarRes] = await Promise.all([
         supabase.from('programs').select('id', { count: 'exact' }),
         supabase.from('news').select('id', { count: 'exact' }),
         supabase.from('gallery').select('id', { count: 'exact' }),
         supabase.from('announcements').select('id', { count: 'exact' }),
         supabase.from('profiles').select('id', { count: 'exact' }),
+        supabase.from('downloads').select('id', { count: 'exact' }),
+        supabase.from('academic_calendar').select('id', { count: 'exact' }),
       ]);
 
       setStats({
@@ -60,6 +67,8 @@ const AdminDashboard = () => {
         gallery: galleryRes.count || 0,
         announcements: announcementsRes.count || 0,
         users: usersRes.count || 0,
+        downloads: downloadsRes.count || 0,
+        calendar: calendarRes.count || 0,
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -94,7 +103,7 @@ const AdminDashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Program Studi</CardTitle>
@@ -140,16 +149,37 @@ const AdminDashboard = () => {
               <div className="text-2xl font-bold">{stats.users}</div>
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Unduhan</CardTitle>
+              <Download className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.downloads}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Kalender</CardTitle>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.calendar}</div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Management Tabs */}
         <Tabs defaultValue="programs" className="space-y-4">
-          <TabsList>
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
             <TabsTrigger value="programs">Program Studi</TabsTrigger>
             <TabsTrigger value="news">Berita</TabsTrigger>
             <TabsTrigger value="gallery">Galeri</TabsTrigger>
             <TabsTrigger value="announcements">Pengumuman</TabsTrigger>
             <TabsTrigger value="users">Pengguna</TabsTrigger>
+            <TabsTrigger value="downloads">Unduhan</TabsTrigger>
+            <TabsTrigger value="calendar">Kalender</TabsTrigger>
+            <TabsTrigger value="settings">Pengaturan</TabsTrigger>
           </TabsList>
           
           <TabsContent value="programs">
@@ -170,6 +200,18 @@ const AdminDashboard = () => {
           
           <TabsContent value="users">
             <AdminUsers onUpdate={fetchStats} />
+          </TabsContent>
+          
+          <TabsContent value="downloads">
+            <AdminDownloads onUpdate={fetchStats} />
+          </TabsContent>
+          
+          <TabsContent value="calendar">
+            <AdminCalendar onUpdate={fetchStats} />
+          </TabsContent>
+          
+          <TabsContent value="settings">
+            <AdminSettings onUpdate={fetchStats} />
           </TabsContent>
         </Tabs>
       </div>

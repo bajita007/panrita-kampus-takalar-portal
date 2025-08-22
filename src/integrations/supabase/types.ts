@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      academic_calendar: {
+        Row: {
+          created_at: string
+          description: string | null
+          end_date: string | null
+          event_type: string | null
+          id: string
+          is_active: boolean | null
+          start_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          event_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          start_date: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          event_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          start_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       announcements: {
         Row: {
           category: string | null
@@ -47,6 +83,75 @@ export type Database = {
           priority?: string | null
           title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      campus_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key: string
+          setting_value: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      downloads: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          download_count: number | null
+          file_size: string | null
+          file_type: string | null
+          file_url: string
+          id: string
+          is_active: boolean | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_size?: string | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_active?: boolean | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          download_count?: number | null
+          file_size?: string | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_active?: boolean | null
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -161,6 +266,8 @@ export type Database = {
           content: string
           created_at: string | null
           excerpt: string | null
+          external_link: string | null
+          full_content: string | null
           id: string
           image_url: string | null
           is_published: boolean | null
@@ -172,6 +279,8 @@ export type Database = {
           content: string
           created_at?: string | null
           excerpt?: string | null
+          external_link?: string | null
+          full_content?: string | null
           id?: string
           image_url?: string | null
           is_published?: boolean | null
@@ -183,6 +292,8 @@ export type Database = {
           content?: string
           created_at?: string | null
           excerpt?: string | null
+          external_link?: string | null
+          full_content?: string | null
           id?: string
           image_url?: string | null
           is_published?: boolean | null
