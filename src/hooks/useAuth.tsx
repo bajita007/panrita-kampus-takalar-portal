@@ -28,22 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check if user is admin
-          setTimeout(async () => {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .single();
-            
-            const userIsAdmin = profile?.role === 'admin' || profile?.role === 'super_admin';
-            setIsAdmin(userIsAdmin);
-            
-            // Auto-redirect admin users to dashboard
-            if (userIsAdmin && window.location.pathname === '/auth') {
-              window.location.href = '/admin';
-            }
-          }, 0);
+          // All authenticated users are admin, redirect to dashboard
+          setIsAdmin(true);
+          if (window.location.pathname === '/auth') {
+            window.location.href = '/admin';
+          }
         } else {
           setIsAdmin(false);
         }

@@ -20,7 +20,7 @@ const Auth = () => {
   useEffect(() => {
     if (user) {
       // Let useAuth handle admin redirect automatically
-      navigate('/');
+      navigate('/admin');
     }
   }, [user, navigate]);
 
@@ -78,7 +78,7 @@ const Auth = () => {
         title: "Berhasil",
         description: "Login berhasil!",
       });
-      navigate('/');
+      navigate('/admin');
     }
     setIsLoading(false);
   };
