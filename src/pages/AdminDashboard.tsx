@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -14,12 +12,18 @@ import { AdminUsers } from '@/components/admin/AdminUsers';
 import { AdminSettings } from '@/components/admin/AdminSettings';
 import { AdminDownloads } from '@/components/admin/AdminDownloads';
 import { AdminCalendar } from '@/components/admin/AdminCalendar';
-import { Users, BookOpen, Image, Bell, Newspaper, LogOut, Settings, Download, Calendar } from 'lucide-react';
+import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { Users, BookOpen, Image, Bell, Newspaper, Download, Calendar, Menu } from 'lucide-react';
+import {
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 const AdminDashboard = () => {
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState("overview");
   const [stats, setStats] = useState({
     programs: 0,
     news: 0,
@@ -75,9 +79,93 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleLogout = async () => {
-    await signOut();
-    navigate('/');
+  const renderContent = () => {
+    switch (activeTab) {
+      case "programs":
+        return <AdminPrograms onUpdate={fetchStats} />;
+      case "news":
+        return <AdminNews onUpdate={fetchStats} />;
+      case "gallery":
+        return <AdminGallery onUpdate={fetchStats} />;
+      case "announcements":
+        return <AdminAnnouncements onUpdate={fetchStats} />;
+      case "users":
+        return <AdminUsers onUpdate={fetchStats} />;
+      case "downloads":
+        return <AdminDownloads onUpdate={fetchStats} />;
+      case "calendar":
+        return <AdminCalendar onUpdate={fetchStats} />;
+      case "settings":
+        return <AdminSettings onUpdate={fetchStats} />;
+      default:
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Program Studi</CardTitle>
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.programs}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Berita</CardTitle>
+                <Newspaper className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.news}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Galeri</CardTitle>
+                <Image className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.gallery}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Pengumuman</CardTitle>
+                <Bell className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.announcements}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Pengguna</CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.users}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Unduhan</CardTitle>
+                <Download className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.downloads}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Kalender</CardTitle>
+                <Calendar className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.calendar}</div>
+              </CardContent>
+            </Card>
+          </div>
+        );
+    }
   };
 
   if (!user || !isAdmin) {
@@ -85,137 +173,38 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600">Institut Teknologi Pertanian</p>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background">
+        <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Sticky Header */}
+          <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex h-14 items-center gap-4 px-4 lg:px-6">
+              <SidebarTrigger className="-ml-1" />
+              <div className="flex-1">
+                <h1 className="text-lg font-semibold">
+                  {activeTab === "overview" ? "Dashboard Overview" : 
+                   activeTab === "programs" ? "Program Studi" :
+                   activeTab === "news" ? "Berita" :
+                   activeTab === "gallery" ? "Galeri" :
+                   activeTab === "announcements" ? "Pengumuman" :
+                   activeTab === "users" ? "Pengguna" :
+                   activeTab === "downloads" ? "Unduhan" :
+                   activeTab === "calendar" ? "Kalender" :
+                   activeTab === "settings" ? "Pengaturan" : "Dashboard"}
+                </h1>
+              </div>
             </div>
-            <Button onClick={handleLogout} variant="outline">
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+          </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Program Studi</CardTitle>
-              <BookOpen className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.programs}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Berita</CardTitle>
-              <Newspaper className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.news}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Galeri</CardTitle>
-              <Image className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.gallery}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pengumuman</CardTitle>
-              <Bell className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.announcements}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pengguna</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.users}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Unduhan</CardTitle>
-              <Download className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.downloads}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Kalender</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.calendar}</div>
-            </CardContent>
-          </Card>
+          {/* Main Content */}
+          <main className="flex-1 overflow-auto p-4 lg:p-6">
+            {renderContent()}
+          </main>
         </div>
-
-        {/* Management Tabs */}
-        <Tabs defaultValue="programs" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
-            <TabsTrigger value="programs">Program Studi</TabsTrigger>
-            <TabsTrigger value="news">Berita</TabsTrigger>
-            <TabsTrigger value="gallery">Galeri</TabsTrigger>
-            <TabsTrigger value="announcements">Pengumuman</TabsTrigger>
-            <TabsTrigger value="users">Pengguna</TabsTrigger>
-            <TabsTrigger value="downloads">Unduhan</TabsTrigger>
-            <TabsTrigger value="calendar">Kalender</TabsTrigger>
-            <TabsTrigger value="settings">Pengaturan</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="programs">
-            <AdminPrograms onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="news">
-            <AdminNews onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="gallery">
-            <AdminGallery onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="announcements">
-            <AdminAnnouncements onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="users">
-            <AdminUsers onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="downloads">
-            <AdminDownloads onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="calendar">
-            <AdminCalendar onUpdate={fetchStats} />
-          </TabsContent>
-          
-          <TabsContent value="settings">
-            <AdminSettings onUpdate={fetchStats} />
-          </TabsContent>
-        </Tabs>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
