@@ -9,6 +9,8 @@ import About from "./pages/About";
 import Programs from "./pages/Programs";
 import Admissions from "./pages/Admissions";
 import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
+import Downloads from "./pages/Downloads";
 import Contact from "./pages/Contact";
 import VisiMisi from "./pages/VisiMisi";
 import StrukturOrganisasi from "./pages/StrukturOrganisasi";
@@ -56,6 +58,8 @@ const App = () => (
             <Route path="/beasiswa" element={<Beasiswa />} />
             <Route path="/info-karir" element={<InfoKarir />} />
             <Route path="/news" element={<News />} />
+            <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/downloads" element={<Downloads />} />
             <Route path="/berita-akademik" element={<BeritaAkademik />} />
             <Route path="/pengumuman" element={<Pengumuman />} />
             <Route path="/gallery" element={<Gallery />} />

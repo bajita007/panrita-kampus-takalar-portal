@@ -36,7 +36,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               .eq('user_id', session.user.id)
               .single();
             
-            setIsAdmin(profile?.role === 'admin' || profile?.role === 'super_admin');
+            const userIsAdmin = profile?.role === 'admin' || profile?.role === 'super_admin';
+            setIsAdmin(userIsAdmin);
+            
+            // Auto-redirect admin users to dashboard
+            if (userIsAdmin && window.location.pathname === '/auth') {
+              window.location.href = '/admin';
+            }
           }, 0);
         } else {
           setIsAdmin(false);

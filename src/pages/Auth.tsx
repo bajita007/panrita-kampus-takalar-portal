@@ -19,6 +19,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
+      // Let useAuth handle admin redirect automatically
       navigate('/');
     }
   }, [user, navigate]);

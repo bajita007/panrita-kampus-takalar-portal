@@ -6,61 +6,71 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useCampusSettings } from '@/hooks/useCampusSettings';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const { toast } = useToast();
+  const { settings, loading } = useCampusSettings();
+  const [programs, setPrograms] = useState<any[]>([]);
+  const [featuredNews, setFeaturedNews] = useState<any[]>([]);
+  const [galleryImages, setGalleryImages] = useState<any[]>([]);
 
-  const programs = [
-    {
-      title: "Agribisnis",
-      description: "Program studi yang fokus pada manajemen bisnis di sektor pertanian dan pengembangan wirausaha agribisnis",
-      icon: <Users className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400",
-      accreditation: "Akreditasi Baik"
-    },
-    {
-      title: "Manajemen Sumber Daya Perairan", 
-      description: "Program studi yang mengkaji pengelolaan sumber daya perairan secara berkelanjutan",
-      icon: <BookOpen className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=400",
-      accreditation: "Akreditasi Baik"
-    },
-    {
-      title: "Bisnis Digital",
-      description: "Program studi yang memadukan teknologi digital dengan strategi bisnis modern",
-      icon: <Award className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400",
-      accreditation: "Akreditasi Baik"
-    },
-    {
-      title: "Nutrisi dan Teknologi Pakan Ternak",
-      description: "Program studi yang fokus pada pengembangan nutrisi dan teknologi pakan untuk ternak",
-      icon: <GraduationCap className="h-8 w-8 text-green-600" />,
-      image: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=400",
-      accreditation: "Akreditasi Baik"
-    }
-  ];
+  useEffect(() => {
+    fetchPrograms();
+    fetchNews();
+    fetchGallery();
+  }, []);
 
-  const featuredNews = [
-    {
-      title: "Penerimaan Mahasiswa Baru 2024/2025",
-      date: "15 Januari 2024",
-      description: "Pendaftaran mahasiswa baru untuk tahun akademik 2024/2025 telah dibuka dengan berbagai program beasiswa unggulan.",
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400"
-    },
-    {
-      title: "Kerja Sama dengan Kementerian Pertanian",
-      date: "10 Januari 2024", 
-      description: "ITP menandatangani MoU dengan Kementerian Pertanian untuk pengembangan teknologi pertanian berkelanjutan.",
-      image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400"
-    },
-    {
-      title: "Penelitian Unggul Dosen ITP",
-      date: "5 Januari 2024",
-      description: "Tim peneliti ITP berhasil mengembangkan varietas padi unggul yang tahan terhadap perubahan iklim.",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400"
+  const fetchPrograms = async () => {
+    const { data } = await supabase
+      .from('programs')
+      .select('*')
+      .eq('is_active', true)
+      .limit(4);
+    
+    if (data) {
+      setPrograms(data.map(program => ({
+        title: program.name,
+        description: program.description,
+        icon: <Users className="h-8 w-8 text-green-600" />,
+        image: program.image_url || "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400",
+        accreditation: program.accreditation
+      })));
     }
-  ];
+  };
+
+  const fetchNews = async () => {
+    const { data } = await supabase
+      .from('news')
+      .select('*')
+      .eq('is_published', true)
+      .order('created_at', { ascending: false })
+      .limit(3);
+    
+    if (data) {
+      setFeaturedNews(data.map(news => ({
+        id: news.id,
+        title: news.title,
+        date: new Date(news.created_at!).toLocaleDateString('id-ID'),
+        description: news.excerpt || news.content.substring(0, 150) + '...',
+        image: news.image_url || "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400"
+      })));
+    }
+  };
+
+  const fetchGallery = async () => {
+    const { data } = await supabase
+      .from('gallery')
+      .select('*')
+      .eq('is_active', true)
+      .limit(5);
+    
+    if (data) {
+      setGalleryImages(data);
+    }
+  };
 
   const handleButtonClick = (buttonName: string) => {
     toast({
@@ -87,12 +97,11 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="pt-8 pb-8">
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Institut Teknologi
+                {settings.hero_title || 'Institut Teknologi'}
                 <span className="block text-green-600">Pertanian</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Bagian dari Yayasan Panrita Takalar - Mengembangkan teknologi pertanian berkelanjutan 
-                untuk masa depan Indonesia yang lebih hijau dan sejahtera
+                {settings.hero_description || 'Bagian dari Yayasan Panrita Takalar - Mengembangkan teknologi pertanian berkelanjutan untuk masa depan Indonesia yang lebih hijau dan sejahtera'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/admissions">
@@ -112,7 +121,7 @@ const Index = () => {
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1562774053-701939374585?w=600" 
+                src={settings.hero_image || "https://images.unsplash.com/photo-1562774053-701939374585?w=600"} 
                 alt="Campus ITP"
                 className="rounded-lg shadow-xl w-full"
               />
@@ -174,19 +183,19 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 text-center text-white">
             <div>
-              <div className="text-4xl font-bold mb-2">1000+</div>
+              <div className="text-4xl font-bold mb-2">{settings.student_count || '1000+'}+</div>
               <div className="text-green-100">Mahasiswa Aktif</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">50+</div>
+              <div className="text-4xl font-bold mb-2">{settings.lecturer_count || '50+'}+</div>
               <div className="text-green-100">Dosen Berkualitas</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">20+</div>
+              <div className="text-4xl font-bold mb-2">{settings.research_count || '20+'}+</div>
               <div className="text-green-100">Penelitian Unggulan</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">95%</div>
+              <div className="text-4xl font-bold mb-2">{settings.graduation_rate || '95'}%</div>
               <div className="text-green-100">Tingkat Kelulusan</div>
             </div>
           </div>
@@ -220,15 +229,16 @@ const Index = () => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="mb-4">{item.description}</CardDescription>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full border-green-600 text-green-600 hover:bg-green-50"
-                    onClick={() => handleButtonClick(`Berita ${item.title}`)}
-                  >
-                    Baca Selengkapnya
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
+                  <Link to={`/news/${item.id}`}>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="w-full border-green-600 text-green-600 hover:bg-green-50"
+                    >
+                      Baca Selengkapnya
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             ))}
@@ -253,41 +263,54 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 md:row-span-2">
-              <img 
-                src="https://images.unsplash.com/photo-1562774053-701939374585?w=600" 
-                alt="Campus Life"
-                className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
-              />
-            </div>
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300" 
-                alt="Academic Activity"
-                className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
-              />
-            </div>
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=300" 
-                alt="Student Activity"
-                className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
-              />
-            </div>
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300" 
-                alt="Research"
-                className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
-              />
-            </div>
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300" 
-                alt="Laboratory"
-                className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
-              />
-            </div>
+            {galleryImages.slice(0, 5).map((image, index) => (
+              <div key={image.id} className={index === 0 ? "md:col-span-2 md:row-span-2" : ""}>
+                <img 
+                  src={image.image_url} 
+                  alt={image.title}
+                  className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                />
+              </div>
+            ))}
+            {galleryImages.length === 0 && (
+              <>
+                <div className="md:col-span-2 md:row-span-2">
+                  <img 
+                    src="https://images.unsplash.com/photo-1562774053-701939374585?w=600" 
+                    alt="Campus Life"
+                    className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+                <div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300" 
+                    alt="Academic Activity"
+                    className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+                <div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=300" 
+                    alt="Student Activity"
+                    className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+                <div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300" 
+                    alt="Research"
+                    className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+                <div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300" 
+                    alt="Laboratory"
+                    className="w-full h-full object-cover rounded-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+              </>
+            )}
           </div>
           
           <div className="text-center mt-8">
@@ -342,15 +365,15 @@ const Index = () => {
               <div className="space-y-2 text-gray-300">
                 <div className="flex items-center">
                   <MapPin className="h-4 w-4 mr-2 text-green-400" />
-                  <span className="text-sm">Jl. Pendidikan No. 1, Takalar, Sulawesi Selatan</span>
+                  <span className="text-sm">{settings.contact_address || 'Jl. Pendidikan No. 1, Takalar, Sulawesi Selatan'}</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="h-4 w-4 mr-2 text-green-400" />
-                  <span className="text-sm">(0411) 123-4567</span>
+                  <span className="text-sm">{settings.contact_phone || '(0411) 123-4567'}</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="h-4 w-4 mr-2 text-green-400" />
-                  <span className="text-sm">info@itptakalar.ac.id</span>
+                  <span className="text-sm">{settings.contact_email || 'info@itptakalar.ac.id'}</span>
                 </div>
               </div>
             </div>
