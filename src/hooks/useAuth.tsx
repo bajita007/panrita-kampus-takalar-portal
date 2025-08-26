@@ -23,16 +23,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // All authenticated users are admin, redirect to dashboard
+          // All authenticated users are admin
           setIsAdmin(true);
-          if (window.location.pathname === '/auth') {
-            window.location.href = '/admin';
-          }
         } else {
           setIsAdmin(false);
         }
@@ -45,6 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
+      if (session?.user) {
+        setIsAdmin(true);
+      }
       setLoading(false);
     });
 
