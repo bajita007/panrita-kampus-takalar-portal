@@ -1,9 +1,58 @@
 
+import { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Eye, Award } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const VisiMisi = () => {
+  const { toast } = useToast();
+  const [visionMission, setVisionMission] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchVisionMission();
+  }, []);
+
+  const fetchVisionMission = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('campus_settings')
+        .select('setting_key, setting_value')
+        .eq('setting_key', 'vision_mission')
+        .single();
+
+      if (error) {
+        console.error('Error fetching vision mission:', error);
+      } else if (data) {
+        setVisionMission(data.setting_value || {});
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "Gagal memuat data visi dan misi",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navigation />
+        <div className="pt-20 pb-16">
+          <div className="flex justify-center items-center h-96">
+            <div className="text-gray-500">Memuat visi dan misi...</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -23,9 +72,9 @@ const VisiMisi = () => {
               </CardHeader>
               <CardContent className="p-8">
                 <p className="text-lg text-gray-700 text-center leading-relaxed">
-                  "Menjadi institusi pendidikan tinggi yang unggul dalam pengembangan teknologi pertanian 
-                  berkelanjutan dan menghasilkan lulusan yang kompeten, inovatif, dan berkarakter untuk 
-                  kesejahteraan masyarakat pada tahun 2030"
+                  {visionMission.vision || 
+                    "Menjadi institusi pendidikan tinggi yang unggul dalam pengembangan teknologi pertanian berkelanjutan dan menghasilkan lulusan yang kompeten, inovatif, dan berkarakter untuk kesejahteraan masyarakat pada tahun 2030"
+                  }
                 </p>
               </CardContent>
             </Card>
@@ -37,34 +86,19 @@ const VisiMisi = () => {
               </CardHeader>
               <CardContent className="p-8">
                 <div className="space-y-4">
-                  <div className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">1</span>
-                    <p className="text-gray-700">
-                      Menyelenggarakan pendidikan tinggi berkualitas di bidang teknologi pertanian yang 
-                      berlandaskan nilai-nilai islami dan kearifan lokal
-                    </p>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">2</span>
-                    <p className="text-gray-700">
-                      Mengembangkan penelitian dan inovasi teknologi pertanian yang berkelanjutan untuk 
-                      meningkatkan produktivitas dan kesejahteraan petani
-                    </p>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">3</span>
-                    <p className="text-gray-700">
-                      Melaksanakan pengabdian kepada masyarakat melalui transfer teknologi dan 
-                      pemberdayaan masyarakat di bidang pertanian
-                    </p>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">4</span>
-                    <p className="text-gray-700">
-                      Membangun kemitraan strategis dengan berbagai institusi dalam dan luar negeri 
-                      untuk pengembangan ilmu pengetahuan dan teknologi pertanian
-                    </p>
-                  </div>
+                  {(visionMission.missions || [
+                    "Menyelenggarakan pendidikan tinggi berkualitas di bidang teknologi pertanian yang berlandaskan nilai-nilai islami dan kearifan lokal",
+                    "Mengembangkan penelitian dan inovasi teknologi pertanian yang berkelanjutan untuk meningkatkan produktivitas dan kesejahteraan petani",
+                    "Melaksanakan pengabdian kepada masyarakat melalui transfer teknologi dan pemberdayaan masyarakat di bidang pertanian",
+                    "Membangun kemitraan strategis dengan berbagai institusi dalam dan luar negeri untuk pengembangan ilmu pengetahuan dan teknologi pertanian"
+                  ]).map((mission: string, index: number) => (
+                    <div key={index} className="flex items-start">
+                      <span className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
+                        {index + 1}
+                      </span>
+                      <p className="text-gray-700">{mission}</p>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
