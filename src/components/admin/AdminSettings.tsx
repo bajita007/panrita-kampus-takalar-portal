@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Settings, Save } from 'lucide-react';
+import { ImageUpload } from './ImageUpload';
 
 interface AdminSettingsProps {
   onUpdate?: () => void;
@@ -55,7 +56,7 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
         .from('campus_settings')
         .upsert({
           setting_key: key,
-          setting_value: value,
+          setting_value: typeof value === 'string' ? value : JSON.stringify(value),
         });
 
       if (error) throw error;
@@ -134,22 +135,20 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="hero-image">URL Gambar Hero</Label>
-              <Input
-                id="hero-image"
-                value={settings.hero_section?.hero_image || ''}
-                onChange={(e) => handleHeroUpdate('hero_image', e.target.value)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="background-image">URL Background</Label>
-              <Input
-                id="background-image"
-                value={settings.hero_section?.background_image || ''}
-                onChange={(e) => handleHeroUpdate('background_image', e.target.value)}
-              />
-            </div>
+            <ImageUpload
+              label="Gambar Hero"
+              currentImageUrl={settings.hero_section?.hero_image}
+              onImageUpload={(url) => handleHeroUpdate('hero_image', url)}
+              bucket="content-images"
+              folder="hero"
+            />
+            <ImageUpload
+              label="Background Image"
+              currentImageUrl={settings.hero_section?.background_image}
+              onImageUpload={(url) => handleHeroUpdate('background_image', url)}
+              bucket="content-images"
+              folder="background"
+            />
           </div>
           <Button onClick={() => updateSetting('hero_section', settings.hero_section)} disabled={saving}>
             <Save className="h-4 w-4 mr-2" />
