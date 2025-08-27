@@ -12,6 +12,7 @@ import { AdminUsers } from '@/components/admin/AdminUsers';
 import { AdminSettings } from '@/components/admin/AdminSettings';
 import { AdminDownloads } from '@/components/admin/AdminDownloads';
 import { AdminCalendar } from '@/components/admin/AdminCalendar';
+import { AdminLecturers } from '@/components/admin/AdminLecturers';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { Users, BookOpen, Image, Bell, Newspaper, Download, Calendar, Menu } from 'lucide-react';
 import {
@@ -83,6 +84,8 @@ const AdminDashboard = () => {
     switch (activeTab) {
       case "programs":
         return <AdminPrograms onUpdate={fetchStats} />;
+      case "lecturers":
+        return <AdminLecturers onUpdate={fetchStats} />;
       case "news":
         return <AdminNews onUpdate={fetchStats} />;
       case "gallery":
@@ -186,6 +189,7 @@ const AdminDashboard = () => {
                 <h1 className="text-lg font-semibold">
                   {activeTab === "overview" ? "Dashboard Overview" : 
                    activeTab === "programs" ? "Program Studi" :
+                   activeTab === "lecturers" ? "Profil Dosen" :
                    activeTab === "news" ? "Berita" :
                    activeTab === "gallery" ? "Galeri" :
                    activeTab === "announcements" ? "Pengumuman" :

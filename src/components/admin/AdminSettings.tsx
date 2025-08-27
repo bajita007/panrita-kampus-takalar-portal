@@ -80,23 +80,23 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
   };
 
   const handleHeroUpdate = (field: string, value: string) => {
-    const newHero = { ...settings.hero_section, [field]: value };
-    updateSetting('hero_section', newHero);
+    const newHero = { ...(settings.hero_section || {}), [field]: value };
+    setSettings(prev => ({ ...prev, hero_section: newHero }));
   };
 
   const handleContactUpdate = (field: string, value: string) => {
-    const newContact = { ...settings.contact_info, [field]: value };
-    updateSetting('contact_info', newContact);
+    const newContact = { ...(settings.contact_info || {}), [field]: value };
+    setSettings(prev => ({ ...prev, contact_info: newContact }));
   };
 
   const handleStatsUpdate = (field: string, value: string) => {
-    const newStats = { ...settings.stats, [field]: value };
-    updateSetting('stats', newStats);
+    const newStats = { ...(settings.stats || {}), [field]: value };
+    setSettings(prev => ({ ...prev, stats: newStats }));
   };
 
   const handleVisionMissionUpdate = (field: string, value: any) => {
-    const newVisionMission = { ...settings.vision_mission, [field]: value };
-    updateSetting('vision_mission', newVisionMission);
+    const newVisionMission = { ...(settings.vision_mission || {}), [field]: value };
+    setSettings(prev => ({ ...prev, vision_mission: newVisionMission }));
   };
 
   if (loading) {
