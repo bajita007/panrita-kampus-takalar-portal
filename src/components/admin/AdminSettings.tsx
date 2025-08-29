@@ -52,11 +52,18 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
   const updateSetting = async (key: string, value: any) => {
     setSaving(true);
     try {
+      // Validate that we have valid data to save
+      if (!value || (typeof value === 'object' && Object.keys(value).length === 0)) {
+        throw new Error('Tidak ada data untuk disimpan');
+      }
+
       const { error } = await supabase
         .from('campus_settings')
         .upsert({
           setting_key: key,
-          setting_value: typeof value === 'string' ? value : JSON.stringify(value),
+          setting_value: value,
+        }, {
+          onConflict: 'setting_key'
         });
 
       if (error) throw error;
@@ -72,7 +79,7 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
       console.error('Error updating setting:', error);
       toast({
         title: "Error",
-        description: "Gagal menyimpan pengaturan",
+        description: error instanceof Error ? error.message : "Gagal menyimpan pengaturan",
         variant: "destructive",
       });
     } finally {
@@ -122,7 +129,6 @@ export const AdminSettings = ({ onUpdate }: AdminSettingsProps) => {
               id="hero-title"
               value={settings.hero_section?.title || ''}
               onChange={(e) => handleHeroUpdate('title', e.target.value)}
-              onBlur={() => updateSetting('hero_section', settings.hero_section)}
             />
           </div>
           <div>
