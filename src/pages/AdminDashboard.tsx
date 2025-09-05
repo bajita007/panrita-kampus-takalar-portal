@@ -189,10 +189,11 @@ const AdminDashboard = () => {
             <div className="flex h-14 items-center gap-4 px-4 lg:px-6">
               <SidebarTrigger className="-ml-1" />
               <div className="flex-1">
-                <h1 className="text-lg font-semibold">
+                 <h1 className="text-lg font-semibold">
                   {activeTab === "overview" ? "Dashboard Overview" : 
                    activeTab === "programs" ? "Program Studi" :
                    activeTab === "lecturers" ? "Profil Dosen" :
+                   activeTab === "organization" ? "Struktur Organisasi" :
                    activeTab === "news" ? "Berita" :
                    activeTab === "gallery" ? "Galeri" :
                    activeTab === "announcements" ? "Pengumuman" :
