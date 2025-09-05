@@ -13,6 +13,7 @@ import { AdminSettings } from '@/components/admin/AdminSettings';
 import { AdminDownloads } from '@/components/admin/AdminDownloads';
 import { AdminCalendar } from '@/components/admin/AdminCalendar';
 import { AdminLecturers } from '@/components/admin/AdminLecturers';
+import { AdminOrganisasi } from '@/components/admin/AdminOrganisasi';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { Users, BookOpen, Image, Bell, Newspaper, Download, Calendar, Menu } from 'lucide-react';
 import {
@@ -86,6 +87,8 @@ const AdminDashboard = () => {
         return <AdminPrograms onUpdate={fetchStats} />;
       case "lecturers":
         return <AdminLecturers onUpdate={fetchStats} />;
+      case "organization":
+        return <AdminOrganisasi onUpdate={fetchStats} />;
       case "news":
         return <AdminNews onUpdate={fetchStats} />;
       case "gallery":

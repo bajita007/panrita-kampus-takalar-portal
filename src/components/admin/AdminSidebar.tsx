@@ -10,7 +10,8 @@ import {
   Calendar, 
   Settings,
   LogOut,
-  LayoutDashboard
+  LayoutDashboard,
+  Building
 } from "lucide-react"
 
 import {
@@ -33,6 +34,7 @@ const menuItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Program Studi", url: "/admin?tab=programs", icon: BookOpen },
   { title: "Profil Dosen", url: "/admin?tab=lecturers", icon: Users },
+  { title: "Struktur Organisasi", url: "/admin?tab=organization", icon: Building },
   { title: "Berita", url: "/admin?tab=news", icon: Newspaper },
   { title: "Galeri", url: "/admin?tab=gallery", icon: Image },
   { title: "Pengumuman", url: "/admin?tab=announcements", icon: Bell },
