@@ -207,7 +207,7 @@ export const AdminOrganisasi = ({ onUpdate }: AdminOrganisasiProps) => {
               Tambah Posisi
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-background border shadow-lg">
             <DialogHeader>
               <DialogTitle>
                 {editingStructure ? 'Edit Struktur Organisasi' : 'Tambah Struktur Organisasi Baru'}
