@@ -38,6 +38,7 @@ const menuItems = [
   { title: "Berita", url: "/admin?tab=news", icon: Newspaper },
   { title: "Galeri", url: "/admin?tab=gallery", icon: Image },
   { title: "Pengumuman", url: "/admin?tab=announcements", icon: Bell },
+  { title: "Media Manager", url: "/admin?tab=media", icon: Image },
   { title: "Pengguna", url: "/admin?tab=users", icon: Users },
   { title: "Unduhan", url: "/admin?tab=downloads", icon: Download },
   { title: "Kalender", url: "/admin?tab=calendar", icon: Calendar },

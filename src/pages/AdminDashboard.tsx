@@ -14,6 +14,7 @@ import { AdminDownloads } from '@/components/admin/AdminDownloads';
 import { AdminCalendar } from '@/components/admin/AdminCalendar';
 import { AdminLecturers } from '@/components/admin/AdminLecturers';
 import { AdminOrganisasi } from '@/components/admin/AdminOrganisasi';
+import { AdminMedia } from '@/components/admin/AdminMedia';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { Users, BookOpen, Image, Bell, Newspaper, Download, Calendar, Menu } from 'lucide-react';
 import {
@@ -89,6 +90,8 @@ const AdminDashboard = () => {
         return <AdminLecturers onUpdate={fetchStats} />;
       case "organization":
         return <AdminOrganisasi onUpdate={fetchStats} />;
+      case "media":
+        return <AdminMedia onUpdate={fetchStats} />;
       case "news":
         return <AdminNews onUpdate={fetchStats} />;
       case "gallery":
@@ -194,6 +197,7 @@ const AdminDashboard = () => {
                    activeTab === "programs" ? "Program Studi" :
                    activeTab === "lecturers" ? "Profil Dosen" :
                    activeTab === "organization" ? "Struktur Organisasi" :
+                   activeTab === "media" ? "Media Manager" :
                    activeTab === "news" ? "Berita" :
                    activeTab === "gallery" ? "Galeri" :
                    activeTab === "announcements" ? "Pengumuman" :
